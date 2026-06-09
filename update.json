@@ -1,8 +1,9 @@
 {
   "app": "SkladDrive",
   "latest_version": "1.0.0",
-  "release_date": "2026-06-15",
+  "release_date": "2026-06-09",
   "download_url": "https://skladdrive.github.io/downloads/SkladDrive_1.0.0.zip",
   "changelog_url": "https://skladdrive.github.io/changelog.html",
+  "sha256": "",
   "message": "Доступна новая версия СкладDrive."
 }
