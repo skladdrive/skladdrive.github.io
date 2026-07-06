@@ -316,23 +316,89 @@ h3 {
 }
 
 .quick-card {
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
-  box-shadow: 0 12px 36px rgba(20, 36, 70, 0.08);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(18px, 2.2vw, 28px);
+  border: 1px solid rgba(31, 157, 99, 0.24);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(17, 165, 255, 0.14), transparent 34%),
+    linear-gradient(135deg, #f1fff8 0%, #f7fbff 100%);
+  box-shadow: 0 20px 48px rgba(20, 36, 70, 0.14);
+}
+
+.quick-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--green), var(--blue));
 }
 
 .quick-card img {
-  width: 58px;
-  height: 58px;
+  width: 62px;
+  height: 62px;
   border-radius: 18px;
-  margin-bottom: 6px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 22px rgba(7, 94, 232, 0.22);
 }
 
-.quick-card a {
-  color: var(--blue);
+.quick-card h3 {
+  margin-bottom: 12px;
+  color: var(--ink);
+  font-size: clamp(20px, 1.5vw, 28px);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.quick-card h3 span {
+  color: var(--green);
+  white-space: nowrap;
+}
+
+.license-price {
+  margin: 0 0 18px;
+  color: #5f6f8c;
+  font-size: clamp(20px, 1.7vw, 30px);
   font-weight: 800;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.license-price strong {
+  color: var(--green);
+  font-size: 1em;
+  white-space: nowrap;
+}
+
+.order-button {
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #25ad6d, #16864f);
+  box-shadow: 0 16px 32px rgba(31, 157, 99, 0.3);
+  font-size: clamp(18px, 1.35vw, 22px);
+  letter-spacing: 0.01em;
+}
+
+.order-button:hover,
+.order-button:focus-visible {
+  background: linear-gradient(135deg, #1d985e, #126f43);
+  transform: translateY(-1px);
+}
+
+.order-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.45;
+}
+
+.order-note strong {
+  color: var(--ink);
 }
 
 .section-heading {
@@ -1174,6 +1240,11 @@ img { max-width: 100%; }
 @media (max-width: 560px) {
   .site-header {
     position: sticky;
+  }
+
+  .quick-card h3,
+  .license-price {
+    white-space: normal;
   }
 
   .brand {
