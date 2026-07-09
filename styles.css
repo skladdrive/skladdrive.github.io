@@ -1280,3 +1280,62 @@ img { max-width: 100%; }
   border-radius: 8px;
   background: #f8fbff;
 }
+
+
+/* Payment and legal information page */
+.site-footer a {
+  color: var(--blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  text-decoration: underline;
+}
+
+.legal-page {
+  width: min(980px, calc(100% - 36px));
+}
+
+.legal-page table td:last-child {
+  white-space: nowrap;
+}
+
+.todo-text {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #6a4500;
+  background: var(--soft-yellow);
+  font-weight: 800;
+}
+
+.legal-cta {
+  margin-top: 12px;
+}
+
+.markdown-page a.legal-cta {
+  color: #ffffff;
+}
+
+.order-note a {
+  color: var(--blue-dark);
+  font-weight: 800;
+}
+
+
+/* Payment info page: smaller headings */
+.payment-info-page .doc-hero h1 {
+  font-size: clamp(24px, 3vw, 36px);
+}
+
+.payment-info-page .legal-page h1 {
+  font-size: clamp(21px, 2.2vw, 30px);
+  line-height: 1.12;
+}
+
+.payment-info-page .legal-page h2 {
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.16;
+}
