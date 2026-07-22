@@ -1495,6 +1495,17 @@ img { max-width: 100%; }
   margin-top: 24px;
 }
 
+.payment-result-actions .button-secondary {
+  color: var(--blue-dark);
+  border-color: var(--line);
+  background: #ffffff;
+}
+
+.payment-result-actions .button-secondary:hover,
+.payment-result-actions .button-secondary:focus-visible {
+  background: #eef5ff;
+}
+
 @media (max-width: 560px) {
   .checkout-card {
     padding: 18px;
