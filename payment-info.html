@@ -82,9 +82,9 @@
 <li>На сайте покупатель нажимает кнопку <strong>«Оформить заказ»</strong> и переходит к форме заказа.</li>
 <li>В форме заказа покупатель заполняет обязательные поля: <strong>«Код ПК»</strong> — код из программы; <strong>«Email»</strong> — адрес для получения лицензионного ключа, чека и связи по заказу.</li>
 <li>Покупатель принимает условия покупки и нажимает <strong>«Перейти к оплате»</strong>. После этого открывается защищенная страница Робокассы, где можно выбрать способ оплаты.</li>
-<li>После подтверждения оплаты продавец использует указанные покупателем <strong>Код-ПК</strong> и <strong>e-mail</strong>, формирует лицензионный ключ и отправляет его на указанный e-mail.</li>
+<li>После подтверждения оплаты лицензионный ключ автоматически формируется для указанного <strong>Кода ПК</strong>, показывается на странице успешной оплаты и отправляется на указанный <strong>Email</strong>.</li>
 </ol>
-<p>Выдача ключа выполняется вручную. Обычно ключ отправляется в день оплаты, в отдельных случаях — в течение <strong>1–2 рабочих дней</strong> после подтверждения оплаты и получения корректных данных: <strong>Код-ПК</strong> и <strong>e-mail</strong>. Если письмо не пришло, проверьте папку «Спам» и напишите на e-mail поддержки.</p>
+<p>Ключ формируется автоматически сразу после подтверждения платежа. Если письмо не пришло, проверьте папку «Спам», сохраните ключ со страницы успешной оплаты или напишите на e-mail поддержки.</p>
 <section class="checkout-card" id="order-form" aria-labelledby="order-form-title">
 <p class="eyebrow">Оформление лицензии</p>
 <h2 id="order-form-title">Лицензия на 1 ПК сроком на 1 год</h2>
@@ -92,8 +92,8 @@
 <form class="checkout-form" action="https://skladdrive-payment.skladdrive.workers.dev/create-payment" method="post">
 <div class="form-field">
 <label for="pc-code">Код ПК</label>
-<input id="pc-code" name="pc_code" type="text" required minlength="3" maxlength="255" autocomplete="off" placeholder="XXXX-XXXX-XXXX-XXXX" aria-describedby="pc-code-help"/>
-<small id="pc-code-help">В программе откройте «О приложении» и нажмите «Скопировать код». Формат: XXXX-XXXX-XXXX-XXXX.</small>
+<input id="pc-code" name="pc_code" type="text" required minlength="3" maxlength="255" autocomplete="off" placeholder="Например: 3B89-AE17-AF44-3FAF" aria-describedby="pc-code-help"/>
+<small id="pc-code-help">В программе откройте «О приложении» и нажмите «Скопировать код». Пример: 3B89-AE17-AF44-3FAF.</small>
 </div>
 <div class="form-field">
 <label for="order-email">Email</label>

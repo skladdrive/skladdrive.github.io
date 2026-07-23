@@ -6,6 +6,7 @@
 <title>Спасибо за оплату — СкладDrive</title>
 <meta content="Подтверждение оплаты лицензии СкладDrive." name="description"/>
 <meta content="noindex,follow" name="robots"/>
+<meta name="referrer" content="no-referrer"/>
 <link href="assets/icon.png" rel="icon"/>
 <link href="styles.css" rel="stylesheet"/>
 <meta content="#075ee8" name="theme-color"/>
@@ -30,10 +31,23 @@
 <main>
 <section class="payment-result-card" aria-labelledby="result-title">
 <div class="payment-result-icon" aria-hidden="true">✓</div>
-<p class="eyebrow">Заказ оформлен</p>
+<p class="eyebrow">Оплата принята</p>
 <h1 id="result-title">Спасибо за оплату!</h1>
-<p>После подтверждения платежа чек придет на указанный Email. Лицензионный ключ формируется вручную и обычно отправляется в день оплаты, в отдельных случаях — в течение 1–2 рабочих дней.</p>
-<p>Если письмо не пришло, проверьте папку «Спам» или напишите на <a href="mailto:skladdrive@mail.ru">skladdrive@mail.ru</a>.</p>
+<p id="license-status" class="license-status" role="status">Подтверждаем платёж и готовим лицензионный ключ…</p>
+<div id="license-result" class="license-result" hidden>
+<dl class="license-details">
+<div><dt>Номер заказа</dt><dd id="license-order"></dd></div>
+<div><dt>Действует до</dt><dd id="license-expires"></dd></div>
+</dl>
+<label for="license-key"><strong>Лицензионный ключ</strong></label>
+<textarea id="license-key" class="license-key" readonly rows="8" spellcheck="false" aria-describedby="license-hint"></textarea>
+<p id="license-hint" class="license-hint">Скопируйте ключ целиком и вставьте его в программе во вкладке активации. Ключ также отправлен на указанный Email.</p>
+<button id="copy-license" class="button button-primary" type="button">Скопировать ключ</button>
+</div>
+<div id="license-error" class="license-error" hidden>
+<p id="license-error-text">Не удалось показать ключ на странице.</p>
+<p>Ключ сохранён в заказе. Проверьте входящие и папку «Спам» или напишите на <a href="mailto:skladdrive@mail.ru">skladdrive@mail.ru</a>.</p>
+</div>
 <div class="payment-result-actions">
 <a class="button button-primary" href="index.html">На главную</a>
 </div>
@@ -44,5 +58,133 @@
 <span>Простой учет склада, работ и сервиса для СТО</span>
 </footer>
 <script defer src="menu.js"></script>
+<script>
+(() => {
+  const workerUrl =
+    "https://skladdrive-payment.skladdrive.workers.dev/license";
+
+  const params = new URLSearchParams(window.location.search);
+  const getParam = (name) => {
+    for (const [key, value] of params.entries()) {
+      if (key.toLowerCase() === name.toLowerCase()) {
+        return value;
+      }
+    }
+    return "";
+  };
+
+  const payment = {
+    OutSum: getParam("OutSum"),
+    InvId: getParam("InvId"),
+    SignatureValue: getParam("SignatureValue"),
+  };
+
+  const status = document.getElementById("license-status");
+  const result = document.getElementById("license-result");
+  const errorBox = document.getElementById("license-error");
+  const errorText = document.getElementById("license-error-text");
+  const keyField = document.getElementById("license-key");
+  const copyButton = document.getElementById("copy-license");
+
+  history.replaceState(
+    {},
+    document.title,
+    window.location.pathname,
+  );
+
+  const showError = (message) => {
+    status.hidden = true;
+    result.hidden = true;
+    errorText.textContent = message;
+    errorBox.hidden = false;
+  };
+
+  const wait = (milliseconds) =>
+    new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+  const loadLicense = async () => {
+    if (
+      !payment.OutSum ||
+      !payment.InvId ||
+      !payment.SignatureValue
+    ) {
+      showError(
+        "В адресе страницы нет данных платежа. Если вы обновили страницу, проверьте письмо с ключом.",
+      );
+      return;
+    }
+
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      let response;
+      let data;
+
+      try {
+        response = await fetch(workerUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: new URLSearchParams(payment),
+          cache: "no-store",
+          referrerPolicy: "no-referrer",
+        });
+
+        data = await response.json();
+      } catch {
+        showError(
+          "Не удалось связаться с сервером выдачи ключей. Ключ будет отправлен на Email.",
+        );
+        return;
+      }
+
+      if (response.ok && data.ok) {
+        document.getElementById("license-order").textContent =
+          `№${data.orderId}`;
+        document.getElementById("license-expires").textContent =
+          data.expiresAt;
+        keyField.value = data.licenseKey;
+        status.hidden = true;
+        errorBox.hidden = true;
+        result.hidden = false;
+        return;
+      }
+
+      if (response.status === 202 && data.pending) {
+        status.textContent =
+          data.message || "Платёж подтверждается…";
+        await wait(1500);
+        continue;
+      }
+
+      showError(
+        data.error || "Не удалось показать ключ на странице.",
+      );
+      return;
+    }
+
+    showError(
+      "Подтверждение заняло больше обычного. Ключ будет отправлен на Email после подтверждения платежа.",
+    );
+  };
+
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(keyField.value);
+    } catch {
+      keyField.focus();
+      keyField.select();
+      document.execCommand("copy");
+    }
+
+    copyButton.textContent = "Скопировано";
+    setTimeout(() => {
+      copyButton.textContent = "Скопировать ключ";
+    }, 1800);
+  });
+
+  loadLicense();
+})();
+</script>
 </body>
 </html>
