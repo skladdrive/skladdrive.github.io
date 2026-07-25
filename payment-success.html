@@ -126,12 +126,18 @@
               "application/x-www-form-urlencoded;charset=UTF-8",
           },
           body: new URLSearchParams(payment),
-          cache: "no-store",
           referrerPolicy: "no-referrer",
         });
 
         data = await response.json();
       } catch {
+        if (attempt < 2) {
+          status.textContent =
+            "Связываемся с сервером выдачи ключей…";
+          await wait(1500);
+          continue;
+        }
+
         showError(
           "Не удалось связаться с сервером выдачи ключей. Ключ будет отправлен на Email.",
         );
@@ -142,7 +148,7 @@
         document.getElementById("license-order").textContent =
           `№${data.orderId}`;
         document.getElementById("license-expires").textContent =
-          data.expiresAt;
+          data.expiresAt || "Бессрочно";
         keyField.value = data.licenseKey;
         status.hidden = true;
         errorBox.hidden = true;
