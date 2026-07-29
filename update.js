@@ -1,15 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll("[data-download-link]");
-  if (!buttons.length) return;
+  const rustoreLinks = document.querySelectorAll("[data-rustore-link]");
+  const rustoreAppUrl = "https://www.rustore.ru/";
 
   const manifestUrl =
     "https://skladdrive-payment.skladdrive.workers.dev/updates/latest.json";
 
+  rustoreLinks.forEach(function (link) {
+    link.href = rustoreAppUrl;
+  });
+
+  if (!buttons.length) return;
+
   function applyUpdate(data) {
-    if (!data || !data.download_url) return;
+    if (!data) return;
+
+    const downloadUrl = data.download_url || data.mirror_url;
+    if (!downloadUrl) return;
 
     buttons.forEach(function (button) {
-      button.href = data.download_url;
+      button.href = downloadUrl;
       button.removeAttribute("target");
       button.removeAttribute("rel");
 
@@ -42,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(applyUpdate)
         .catch(function () {
-          // В HTML остаётся прямая резервная ссылка на Worker.
+          // В HTML остаётся прямая ссылка на резервное облачное зеркало.
         });
     });
 });

@@ -420,6 +420,12 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.download-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
 .download-card,
 .steps-list article,
 .news-list article {
@@ -454,6 +460,31 @@ h3 {
 .button-download:focus-visible {
   border-color: var(--blue);
   background: #dcecff;
+}
+
+.download-action {
+  color: #167a4d;
+  border-color: #9bd6b8;
+  background: #eefaf4;
+}
+
+.download-action:hover,
+.download-action:focus-visible {
+  color: #0e613b;
+  border-color: var(--green);
+  background: #dff5e9;
+}
+
+.download-action-soon {
+  color: #218457;
+  border-style: dashed;
+}
+
+.trial-internet-note {
+  margin-top: 14px !important;
+  padding-top: 14px;
+  border-top: 1px solid rgba(31, 157, 99, 0.3);
+  color: #11623e;
 }
 
 .steps-list {
