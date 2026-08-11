@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll("[data-download-link]");
   const rustoreLinks = document.querySelectorAll("[data-rustore-link]");
-  const rustoreAppUrl = "https://www.rustore.ru/";
+  const rustoreAppUrl =
+    "https://www.rustore.ru/catalog/app/ru.skladdrive.phone";
 
   const manifestUrl =
     "https://skladdrive-payment.skladdrive.workers.dev/updates/latest.json";
@@ -15,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function applyUpdate(data) {
     if (!data) return;
 
-    const downloadUrl = data.download_url || data.mirror_url;
+    const downloadUrl =
+      data.primary_download_url || data.download_url || data.mirror_url;
     if (!downloadUrl) return;
 
     buttons.forEach(function (button) {

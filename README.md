@@ -13,15 +13,27 @@
 
 В title/description, Open Graph и JSON-LD оставлены оба написания: `СкладDrive` и `Склад Drive`, чтобы сайт мог находиться по обоим вариантам запроса.
 
-## Обновления
+## Обновления и загрузка
 
-Актуальная версия и ссылка на архив хранятся в `update.json`.
+Актуальная версия, основная ссылка на Worker и резервное зеркало хранятся в `update.json`.
+Архив программы загружается в R2 через административную страницу Payment Worker. Сайт сначала
+использует `primary_download_url`, а при недоступности основного хранилища предлагает `mirror_url`.
 
-При новой версии изменить в `update.json`:
+При новой версии проверьте в `update.json`:
 
 ```json
 "latest_version": "1.0.5",
 "release_date": "2026-06-15",
-"download_url": "https://1drv.ms/f/c/d2e946c5855f5b00/IgA9zbOS55xCSrL014Xw9LCrAVcH9uuBSBQTvQi0XTUO3Ck?e=HzMjbO"
+"primary_download_url": "https://skladdrive-payment.skladdrive.workers.dev/download/latest",
+"mirror_url": "https://1drv.ms/...",
+"sha256": "ХЭШ_АРХИВА"
 ```
-Кнопки скачивания на сайте берут ссылку из `update.json` через `update.js`. Сам архив программы хранится на OneDrive, потому что GitHub не подходит для файлов больше 25 МБ.
+
+Кнопки скачивания на сайте берут данные из `update.json` через `update.js`. OneDrive используется
+только как резервное зеркало.
+
+## Скриншоты
+
+Полные изображения находятся в `assets/screenshots/1.webp`–`10.webp`, миниатюры — в
+`assets/screenshots/thumbs/`. После изменения интерфейса замените обе версии изображения и проверьте
+подписи в секции «Галерея» файла `index.html`.

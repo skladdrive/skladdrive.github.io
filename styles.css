@@ -149,7 +149,7 @@ a {
 .hero-bg {
   display: block;
   width: 100%;
-  aspect-ratio: 1881 / 836;
+  aspect-ratio: 1920 / 1128;
   height: auto;
   object-fit: contain;
 }
