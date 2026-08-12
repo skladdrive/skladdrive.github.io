@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (mirrorUrl) {
       mirrorButtons.forEach(function (button) {
         button.href = mirrorUrl;
-        button.target = "_blank";
-        button.rel = "noopener";
+        button.removeAttribute("target");
+        button.removeAttribute("rel");
       });
     }
   }
