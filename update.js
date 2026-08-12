@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll("[data-download-link]");
+  const mirrorButtons = document.querySelectorAll("[data-mirror-link]");
   const rustoreLinks = document.querySelectorAll("[data-rustore-link]");
   const rustoreAppUrl =
     "https://www.rustore.ru/catalog/app/ru.skladdrive.phone";
@@ -11,31 +12,41 @@ document.addEventListener("DOMContentLoaded", function () {
     link.href = rustoreAppUrl;
   });
 
-  if (!buttons.length) return;
+  if (!buttons.length && !mirrorButtons.length) return;
 
   function applyUpdate(data) {
     if (!data) return;
 
     const downloadUrl =
       data.primary_download_url || data.download_url || data.mirror_url;
-    if (!downloadUrl) return;
+    const mirrorUrl = data.mirror_url || data.download_url;
 
-    buttons.forEach(function (button) {
-      button.href = downloadUrl;
-      button.removeAttribute("target");
-      button.removeAttribute("rel");
+    if (downloadUrl) {
+      buttons.forEach(function (button) {
+        button.href = downloadUrl;
+        button.removeAttribute("target");
+        button.removeAttribute("rel");
 
-      if (data.latest_version) {
-        button.setAttribute(
-          "title",
-          "Скачать СкладDrive " + data.latest_version,
-        );
-        button.setAttribute(
-          "aria-label",
-          "Скачать СкладDrive " + data.latest_version,
-        );
-      }
-    });
+        if (data.latest_version) {
+          button.setAttribute(
+            "title",
+            "Скачать СкладDrive " + data.latest_version,
+          );
+          button.setAttribute(
+            "aria-label",
+            "Скачать СкладDrive " + data.latest_version,
+          );
+        }
+      });
+    }
+
+    if (mirrorUrl) {
+      mirrorButtons.forEach(function (button) {
+        button.href = mirrorUrl;
+        button.target = "_blank";
+        button.rel = "noopener";
+      });
+    }
   }
 
   fetch(manifestUrl + "?t=" + Date.now(), { cache: "no-store" })
