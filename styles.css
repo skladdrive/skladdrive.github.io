@@ -1166,6 +1166,134 @@ img { max-width: 100%; }
   }
 }
 
+/* Built-in screenshot viewer */
+html.lightbox-shown {
+  overflow: hidden;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 20, 38, 0.86);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(1200px, 100%);
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 150px);
+  margin: 0 auto;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.lightbox-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: #eaf1ff;
+  font-size: 14px;
+}
+
+.lightbox-caption {
+  font-weight: 700;
+}
+
+.lightbox-counter {
+  color: #a9bede;
+}
+
+.lightbox-link {
+  margin-left: auto;
+  color: #cbe7ff;
+  text-decoration: underline;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover,
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible {
+  border-color: #9fc1f8;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.lightbox-close {
+  top: 18px;
+  right: 18px;
+}
+
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-nav-prev {
+  left: 18px;
+}
+
+.lightbox-nav-next {
+  right: 18px;
+}
+
+@media (max-width: 560px) {
+  .lightbox {
+    padding: 12px;
+  }
+
+  .lightbox-image {
+    max-height: calc(100vh - 170px);
+  }
+
+  .lightbox-nav-prev {
+    left: 8px;
+  }
+
+  .lightbox-nav-next {
+    right: 8px;
+  }
+
+  .lightbox-link {
+    margin-left: 0;
+  }
+}
+
 /* Mobile navigation */
 .menu-toggle {
   display: none;
