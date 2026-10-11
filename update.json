@@ -9,6 +9,7 @@
   "download_source": "github-releases",
   "changelog_url": "https://skladdrive.github.io/changelog.html",
   "sha256": "1cb565d6737d065256f829a0b492cb4102eae55d48734aeb8695cc5572ddd8f3",
+  "size_bytes": 36219826,
   "min_supported_version": "",
   "message": "Доступна новая версия СкладDrive."
 }
