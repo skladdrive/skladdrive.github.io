@@ -49,23 +49,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  fetch(manifestUrl + "?t=" + Date.now(), { cache: "no-store" })
-    .then(function (response) {
-      if (!response.ok) throw new Error("release manifest not found");
-      return response.json();
-    })
+  // Свой update.json на Pages - основной источник: он публикуется сразу
+  // после правки и не требует деплоя воркера. Манифест воркера запрашивается
+  // вторым: в нём download_url жёстко указывает на R2, а этот канал медленный.
+  function fetchJson(url) {
+    return fetch(url + "?t=" + Date.now(), { cache: "no-store" }).then(
+      function (response) {
+        if (!response.ok) throw new Error("update manifest not found");
+        return response.json();
+      },
+    );
+  }
+
+  fetchJson("update.json")
     .then(applyUpdate)
     .catch(function () {
-      return fetch("update.json?t=" + Date.now(), {
-        cache: "no-store",
-      })
-        .then(function (response) {
-          if (!response.ok) throw new Error("update.json not found");
-          return response.json();
-        })
-        .then(applyUpdate)
-        .catch(function () {
-          // В HTML остаётся прямая ссылка на резервное облачное зеркало.
-        });
+      return fetchJson(manifestUrl).then(applyUpdate).catch(function () {
+        // В HTML остаётся прямая ссылка на релиз GitHub.
+      });
     });
 });
