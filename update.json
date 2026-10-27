@@ -1,15 +1,15 @@
 {
   "app": "SkladDrive",
-  "latest_version": "1.2.8",
-  "release_date": "2026-10-23",
+  "latest_version": "1.2.9",
+  "release_date": "2026-10-27",
   "download_url": "https://github.com/skladdrive/skladdrive.github.io/releases/latest/download/SkladDrive-latest.zip",
   "primary_download_url": "https://github.com/skladdrive/skladdrive.github.io/releases/latest/download/SkladDrive-latest.zip",
   "fallback_download_url": "https://skladdrive-payment.skladdrive.workers.dev/download/latest",
   "mirror_url": "https://1drv.ms/f/c/d2e946c5855f5b00/IgA9zbOS55xCSrL014Xw9LCrAYGyCvtyODP-VmZvXbDYbVw",
   "download_source": "github-releases",
   "changelog_url": "https://skladdrive.github.io/changelog.html",
-  "sha256": "a14f614026471df87d46860a507778ec02a68a6e9dd39ea52e9c1d4f86938288",
-  "size_bytes": 36292094,
+  "sha256": "c3fa14211280adad51dc282b9cc8dcd3d9835880db477d17b62abc0622f7645d",
+  "size_bytes": 36409642,
   "min_supported_version": "",
   "message": "Доступна новая версия СкладDrive."
 }
